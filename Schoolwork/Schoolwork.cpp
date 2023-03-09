@@ -4,22 +4,36 @@
 
 int main() {
 
-	std::string vorname;
-	std::string nachname;
-	std::string geburtsdatum;
-	std::ofstream filestream;
+	std::fstream filestream;
+	filestream.open("Text.txt", std::ios::in);
 
-	filestream.open("C:\\Users\\Cekic\\Desktop\\Workbench.txt");
+	if (filestream.good()) {
 
-	if (!filestream.good()) {
-		return 0;
+		std::string output;
+		double sales, reduction;
+		for (int read_set = 1; !filestream.eof(); read_set++) {
+
+			if (read_set % 3 == 0) {
+				filestream >> sales;
+				std::cout << "Current price: " << sales << "\n";
+
+				std::cout << "Price reduction: ";
+				std::cin >> reduction;
+				sales -= reduction;
+
+				std::cout << "New price: " << sales;
+			}
+			else {
+				filestream >> output;
+				std::cout << output;
+			}
+			std::cout << "\n";
+		}
 	}
+	else {
 
-	std::cin >> vorname >> nachname >> geburtsdatum;
-
-	filestream << "Nachname: " << nachname
-		<< "\nVorname: " << vorname
-		<< "\nGeburtstag: " << geburtsdatum;
+		std::cout << "Fehler beim Oeffnen der Datei.";
+	}
 
 	filestream.close();
 	return 0;
